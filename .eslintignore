@@ -1,0 +1,4 @@
+./eslintignore
+
+**/*.js
+node_modules
