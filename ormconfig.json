@@ -1,17 +1,17 @@
 {
-    "type": "postgres",
-    "host": "localhost",
-    "port": 5432,
-    "username": "postgres",
-    "password": "root",
-    "database": "Bitbank",
-    "entities": [
-        "./src/models/*.ts"
-    ],
-    "migrations": [
-        "./src/database/*.ts"
-    ],
-    "cli": {
-        "migrationsDir": "./src/database/migrations"
-    }
+  "type": "postgres",
+  "host": "localhost",
+  "port": 5432,
+  "username": "postgres",
+  "password": "root",
+  "database": "Bitbank",
+  "entities": [
+    "./src/models/*.ts"
+  ],
+  "migrations": [
+    "./src/database/migrations/*.ts"
+  ],
+  "cli": {
+    "migrationsDir": "./src/database/migrations"
+  }
 }
