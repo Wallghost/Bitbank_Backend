@@ -26,3 +26,4 @@ export class createAccounts1593914504882 implements MigrationInterface {
   }
 
 }
+
