@@ -8,7 +8,7 @@ export class createTransfers1594173623122 implements MigrationInterface {
       columns: [
         {
           name: 'transferID',
-          type: 'varchar',
+          type: 'uuid',
           isPrimary: true,
           generationStrategy: "uuid",
           default: 'uuid_generate_v4()'
@@ -31,12 +31,12 @@ export class createTransfers1594173623122 implements MigrationInterface {
         {
           name: 'transfer_created_date',
           type: 'timestamp',
-          isNullable: false,
+          default: 'now()'
         },
         {
           name: 'transfer_payment_date',
           type: 'timestamp',
-          isNullable: false,
+          default: 'now()'
         },
       ]
     }))

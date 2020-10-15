@@ -9,7 +9,7 @@ export class createPayments1594176050650 implements MigrationInterface {
       columns: [
         {
           name: 'paymentID',
-          type: 'varchar',
+          type: 'uuid',
           isPrimary: true,
           generationStrategy: "uuid",
           default: 'uuid_generate_v4()'
@@ -32,12 +32,12 @@ export class createPayments1594176050650 implements MigrationInterface {
         {
           name: 'payment_created_date',
           type: 'timestamp',
-          isNullable: false,
+          default: 'now()'
         },
         {
           name: 'payment_date',
           type: 'timestamp',
-          isNullable: false,
+          default: 'now()'
         },
       ]
     }))

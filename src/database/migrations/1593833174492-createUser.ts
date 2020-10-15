@@ -19,10 +19,16 @@ export class createUser1593833174492 implements MigrationInterface {
         {
           name: "gender",
           type: 'varchar',
-          isNullable: false
+          isNullable: true
         },
         {
           name: "CPF",
+          type: 'varchar',
+          isNullable: false,
+          isUnique: true,
+        },
+        {
+          name: "email",
           type: 'varchar',
           isNullable: false,
           isUnique: true,
@@ -44,7 +50,7 @@ export class createUser1593833174492 implements MigrationInterface {
         },
         {
           name: "updatedAt",
-          type: 'varchar',
+          type: 'timestamp',
           default: 'now()'
         },
       ]

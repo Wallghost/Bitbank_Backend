@@ -9,7 +9,7 @@ export class createWallets1593918279017 implements MigrationInterface {
       columns: [
         {
           name: 'walletID',
-          type: 'varchar',
+          type: 'uuid',
           isPrimary: true,
           generationStrategy: 'uuid',
           default: 'uuid_generate_v4()',
@@ -42,12 +42,13 @@ export class createWallets1593918279017 implements MigrationInterface {
         },
         {
           name: 'createdAt',
-          type: 'varchar',
-          isNullable: false,
-        }, {
+          type: 'timestamp',
+          default: 'now()'
+        },
+        {
           name: 'updatedAt',
-          type: 'varchar',
-          isNullable: false,
+          type: 'timestamp',
+          default: 'now()'
         },
       ],
       foreignKeys: [
