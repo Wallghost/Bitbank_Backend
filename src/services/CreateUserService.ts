@@ -1,4 +1,5 @@
 import { getRepository } from 'typeorm';
+import { hash } from 'bcryptjs';
 import User from '../models/User';
 
 interface Request {
@@ -9,7 +10,7 @@ interface Request {
 }
 
 class CreateUserService {
-  public async execute ({name, CPF, email, password}: Request): Promise<User> {
+  public async execute ({ name, CPF, email, password }: Request): Promise<User> {
     const userRepository = getRepository(User);
 
     const checkUser = await userRepository.findOne({ where: {
@@ -17,8 +18,10 @@ class CreateUserService {
     }})
 
     if(checkUser){
-      throw Error('User already exists');
+      throw new Error('User already exists');
     }
+
+    const hashedPassword = await hash(password, 8);
 
     const generatedAccountNumber = Math.floor( Math.random() * (99999 - 10000)) + 10000;
     const accountDigit = Math.floor(Math.random() * 10);
@@ -28,7 +31,7 @@ class CreateUserService {
       name,
       CPF,
       email,
-      password
+      password: hashedPassword
     });
 
     await userRepository.save(user);

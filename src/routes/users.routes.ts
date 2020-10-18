@@ -1,4 +1,7 @@
 import { Router } from 'express';
+import { getRepository } from 'typeorm';
+
+import User from '../models/User';
 
 import CreateUserService from '../services/CreateUserService'
 
@@ -16,6 +19,14 @@ userRouter.post('/', async (request, response) => {
   } catch (e) {
     return response.json({ error: e.message })
   }
+});
+
+userRouter.get('/balance', async (request, response) => {
+  const userRepository = getRepository(User);
+
+  const user = userRepository.findOne()
+
+  return response.json({});
 });
 
 export default userRouter;
