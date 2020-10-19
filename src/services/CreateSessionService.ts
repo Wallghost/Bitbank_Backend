@@ -4,6 +4,8 @@ import { sign } from 'jsonwebtoken';
 
 import User from '../models/User'
 
+import JWTConfig from '../config/JWTConfig'
+
 interface Request {
   account_number: string;
   password: string
@@ -14,7 +16,7 @@ interface Response {
   token: string
 }
 
-class AuthenticateUserService {
+class CreateSessionService {
   public async execute ({ account_number, password }: Request): Promise<Response> {
     const userRepository = getRepository(User);
 
@@ -30,9 +32,9 @@ class AuthenticateUserService {
       throw new Error('Account Number or Password does not match');
     }
 
-    const token = sign({}, '38a7da83d4ce1d6f5a547c05e4481e95',{
+    const token = sign({}, JWTConfig.jwt.secret,{
       subject: user.account_number,
-      expiresIn: '1d'
+      expiresIn: JWTConfig.jwt.expiresIn
     })
 
     return {
@@ -42,4 +44,4 @@ class AuthenticateUserService {
   }
 }
 
-export default AuthenticateUserService;
+export default CreateSessionService;

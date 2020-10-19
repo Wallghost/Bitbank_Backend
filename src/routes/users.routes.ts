@@ -17,16 +17,8 @@ userRouter.post('/', async (request, response) => {
 
     return response.json(user);
   } catch (e) {
-    return response.json({ error: e.message })
+    return response.status(400).json({ error: e.message })
   }
-});
-
-userRouter.get('/balance', async (request, response) => {
-  const userRepository = getRepository(User);
-
-  const user = userRepository.findOne()
-
-  return response.json({});
 });
 
 export default userRouter;
