@@ -9,24 +9,24 @@ interface TokenPayloadAttributes {
   sub: string;
 }
 
-export default function authenticateUserMiddleware ( request:Request, response: Response, next: NextFunction) {
-  try{
+export default function authenticateUserMiddleware(request: Request, response: Response, next: NextFunction) {
+  try {
     const authHeader = request.headers.authorization;
 
-  if(!authHeader){
-    throw new Error('JWT token not provided');
-  }
+    if (!authHeader) {
+      throw new Error('JWT token not provided');
+    }
 
-  const [type, token] = authHeader.split(' ');
-  const tokenVerified = verify(token, JWTConfig.jwt.secret);
+    const [type, token] = authHeader.split(' ');
+    const tokenVerified = verify(token, JWTConfig.jwt.secret);
 
-  const { sub } = tokenVerified as TokenPayloadAttributes;
+    const { sub } = tokenVerified as TokenPayloadAttributes;
 
-  request.user = {
-    account_number: sub,
-  }
+    request.user = {
+      account_number: sub,
+    }
 
-  return next();
+    return next();
   } catch (err) {
     throw new Error('Invalid JWT Token');
   }
