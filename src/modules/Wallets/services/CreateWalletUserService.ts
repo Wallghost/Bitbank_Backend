@@ -1,8 +1,8 @@
 import { getRepository } from 'typeorm';
 import { hash } from 'bcryptjs';
 
-import User from '../models/User'
-import Wallet from '../models/Wallet'
+import User from '@modules/Users/infra/typeorm/entities/User'
+import Wallet from '@modules/Wallets/infra/typeorm/entities/Wallet'
 
 interface Request {
   account_number: string;

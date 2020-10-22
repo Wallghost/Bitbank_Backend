@@ -2,10 +2,10 @@ import { Router } from 'express';
 
 import { getRepository } from 'typeorm';
 
-import Wallet from '../models/Wallet';
+import Wallet from '@modules/Wallets/infra/typeorm/entities/Wallet';
 
-import authenticateUserMiddleware from '../middlewares/authenticateUserMiddleware'
-import CreateWalletUserService from '../services/CreateWalletUserService';
+import authenticateUserMiddleware from '@modules/Users/infra/http/middlewares/authenticateUserMiddleware'
+import CreateWalletUserService from '@modules/Wallets/services/CreateWalletUserService';
 
 const walletRouter = Router();
 

@@ -1,7 +1,7 @@
 import { Response, Request, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
 
-import JWTConfig from '../config/JWTConfig'
+import JWTConfig from '@config/JWTConfig'
 
 interface TokenPayloadAttributes {
   iat: number;

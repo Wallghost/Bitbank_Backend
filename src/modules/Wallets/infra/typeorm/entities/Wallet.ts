@@ -1,7 +1,7 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
-import User from '../models/User';
-import Account from '../models/Account'
+import User from '@modules/Users/infra/typeorm/entities/User';
+import Account from '@modules/Accounts/infra/typeorm/entities/Account'
 
 @Entity('Wallets')
 class Wallet {

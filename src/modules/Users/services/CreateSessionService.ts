@@ -2,9 +2,9 @@ import { getRepository } from 'typeorm';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 
-import User from '../models/User'
+import User from '@modules/Users/infra/typeorm/entities/User'
 
-import JWTConfig from '../config/JWTConfig'
+import JWTConfig from '@config/JWTConfig'
 
 interface Request {
   account_number: string;
@@ -17,22 +17,22 @@ interface Response {
 }
 
 class CreateSessionService {
-  public async execute ({ account_number, password }: Request): Promise<Response> {
+  public async execute({ account_number, password }: Request): Promise<Response> {
     const userRepository = getRepository(User);
 
     const user = await userRepository.findOne({ where: { account_number } });
 
-    if(!user){
+    if (!user) {
       throw new Error('Account Number or Password does not match');
     }
 
     const passwordMatched = await compare(password, user.password);
 
-    if(!passwordMatched){
+    if (!passwordMatched) {
       throw new Error('Account Number or Password does not match');
     }
 
-    const token = sign({}, JWTConfig.jwt.secret,{
+    const token = sign({}, JWTConfig.jwt.secret, {
       subject: user.account_number,
       expiresIn: JWTConfig.jwt.expiresIn
     })
