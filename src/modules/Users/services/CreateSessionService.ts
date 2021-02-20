@@ -5,6 +5,7 @@ import { sign } from 'jsonwebtoken';
 import User from '@modules/Users/infra/typeorm/entities/User'
 
 import JWTConfig from '@config/JWTConfig'
+import AppError from '@shared/errors/AppError';
 
 interface Request {
   account_number: string;
@@ -23,13 +24,13 @@ class CreateSessionService {
     const user = await userRepository.findOne({ where: { account_number } });
 
     if (!user) {
-      throw new Error('Account Number or Password does not match');
+      throw new AppError('Account Number or Password does not match');
     }
 
     const passwordMatched = await compare(password, user.password);
 
     if (!passwordMatched) {
-      throw new Error('Account Number or Password does not match');
+      throw new AppError('Account Number or Password does not match');
     }
 
     const token = sign({}, JWTConfig.jwt.secret, {

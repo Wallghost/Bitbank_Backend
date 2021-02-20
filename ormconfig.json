@@ -6,12 +6,12 @@
   "password": "root",
   "database": "Bitbank",
   "entities": [
-    "./src/models/*.ts"
+    "./src/modules/**/infra/database/entities/*.ts"
   ],
   "migrations": [
-    "./src/database/migrations/*.ts"
+    "./src/shared/infra/database/migrations/*.ts"
   ],
   "cli": {
-    "migrationsDir": "./src/database/migrations"
+    "migrationsDir": "./src/shared/infra/database/migrations"
   }
 }

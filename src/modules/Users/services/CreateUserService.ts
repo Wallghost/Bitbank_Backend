@@ -1,7 +1,10 @@
-import { getRepository } from 'typeorm';
-import { hash } from 'bcryptjs';
+import { inject, injectable } from 'tsyringe';
 
 import User from '@modules/Users/infra/typeorm/entities/User';
+import UsersRepository from '../repositories/UsersRepository';
+import HashProvider from '../providers/HashProvider/models/HashProvider';
+import AppError from '@shared/errors/AppError';
+
 
 interface Request {
   name: string;
@@ -10,34 +13,36 @@ interface Request {
   password: string;
 }
 
+@injectable()
 class CreateUserService {
-  public async execute({ name, CPF, email, password }: Request): Promise<User> {
-    const userRepository = getRepository(User);
+  constructor(
+    @inject('UsersRepositories')
+    private usersRepository: UsersRepository,
 
-    const checkUser = await userRepository.findOne({
-      where: {
-        CPF
-      }
-    })
+    @inject('HashProvider')
+    private hashProvider: HashProvider
+  ) { }
+
+  public async execute({ name, CPF, email, password }: Request): Promise<User> {
+
+    const checkUser = await this.usersRepository.findByCPF(CPF)
 
     if (checkUser) {
-      throw new Error('User already exists');
+      throw new AppError('User already exists');
     }
 
-    const hashedPassword = await hash(password, 8);
+    const hashedPassword = await this.hashProvider.generateHash(password);
 
     const generatedAccountNumber = Math.floor(Math.random() * (99999 - 10000)) + 10000;
     const accountDigit = Math.floor(Math.random() * 10);
 
-    const user = userRepository.create({
+    const user = this.usersRepository.create({
       account_number: generatedAccountNumber.toString() + '-' + accountDigit.toString(),
       name,
       CPF,
       email,
-      password: hashedPassword
+      password: hashedPassword,
     });
-
-    await userRepository.save(user);
 
     return user;
   }
